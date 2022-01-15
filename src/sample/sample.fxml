@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+  <tabs>
+    <Tab fx:id="clientTab" text="Clients">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="clientTable" layoutX="329.0" layoutY="33.0" prefHeight="272.0" prefWidth="441.0">
+                    <columns>
+                      <TableColumn fx:id="clientColId" prefWidth="75.0" text="ID" />
+                      <TableColumn fx:id="clientColFirstname" prefWidth="75.0" text="Firsname" />
+                        <TableColumn fx:id="clientColLastname" prefWidth="75.0" text="Lasname" />
+                        <TableColumn fx:id="clientColAdress" prefWidth="75.0" text="Adress" />
+                        <TableColumn fx:id="clientColPhoneNumber" prefWidth="117.0" text="Phone number" />
+                    </columns>
+                  </TableView>
+                  <VBox layoutX="14.0" layoutY="33.0" prefHeight="154.0" prefWidth="91.0" spacing="17.0">
+                     <children>
+                        <Label text="firstname">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="lastname">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="adress">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="phone number">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="131.0" layoutY="33.0" prefHeight="152.0" prefWidth="133.0" spacing="7.0">
+                     <children>
+                        <TextField fx:id="firstname" />
+                        <TextField fx:id="lastname" />
+                        <TextField fx:id="adress" />
+                        <TextField fx:id="phoneNumber" />
+                     </children>
+                  </VBox>
+                  <Button fx:id="createClientBtn" layoutX="75.0" layoutY="199.0" mnemonicParsing="false" onAction="#createClient" prefHeight="26.0" prefWidth="61.0" text="Create" />
+                  <Button fx:id="updateClientBtn" layoutX="158.0" layoutY="199.0" mnemonicParsing="false" onAction="#updateClent" text="Update" />
+                  <Button fx:id="deleteClientBtn" layoutX="244.0" layoutY="199.0" mnemonicParsing="false" onAction="#deleteClient" text="Delete" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab fx:id="carTab" text="Cars">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <VBox layoutX="27.0" layoutY="34.0" prefHeight="124.0" prefWidth="100.0" spacing="17.0">
+                     <children>
+                        <Label text="matricule">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="mark">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="color">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="108.0" layoutY="34.0" prefHeight="121.0" prefWidth="162.0" spacing="7.0">
+                     <children>
+                        <TextField fx:id="mat" />
+                        <TextField fx:id="mark" />
+                        <TextField fx:id="color" />
+                     </children>
+                  </VBox>
+                  <TableView fx:id="carTable" layoutX="389.0" layoutY="24.0" prefHeight="260.0" prefWidth="323.0">
+                    <columns>
+                      <TableColumn fx:id="idColCar" prefWidth="75.0" text="ID" />
+                      <TableColumn fx:id="matColCar" prefWidth="75.0" text="Matricule" />
+                        <TableColumn fx:id="markColCar" prefWidth="75.0" text="Mark" />
+                        <TableColumn fx:id="colorColCar" prefWidth="75.0" text="Color" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="carCreateBtn" layoutX="27.0" layoutY="181.0" mnemonicParsing="false" onAction="#createCar" text="Create" />
+                  <Button fx:id="updateCarBtn" layoutX="108.0" layoutY="182.0" mnemonicParsing="false" onAction="#updateCar" text="Update" />
+                  <Button fx:id="carDeleteBtn" layoutX="196.0" layoutY="183.0" mnemonicParsing="false" onAction="#deleteCar" text="Delete" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

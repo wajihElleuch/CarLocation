@@ -9,7 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Car;
 import model.Client;
+import services.CarService;
+import services.impl.CarServiceImpl;
 import services.impl.ClientServiceImpl;
 
 import java.net.URL;
@@ -50,7 +53,6 @@ public class Controller implements Initializable {
     private Tab clientTab;
 
 
-
     @FXML
     private Button createClientBtn;
 
@@ -85,33 +87,34 @@ public class Controller implements Initializable {
     private Tab carTab;
 
     @FXML
-    private TableView<?> carTable;
+    private TableView<Car> carTable;
 
 
     @FXML
     private TextField color;
 
     @FXML
-    private TableColumn<?, ?> colorColCar;
+    private TableColumn<Car, String> colorColCar;
 
     @FXML
-    private TableColumn<?, ?> idColCar;
+    private TableColumn<Car, Long> idColCar;
 
     @FXML
     private TextField mark;
 
     @FXML
-    private TableColumn<?, ?> markColCar;
+    private TableColumn<Car, String> markColCar;
 
     @FXML
     private TextField mat;
 
     @FXML
-    private TableColumn<?, ?> matColCar;
+    private TableColumn<Car, String> matColCar;
 
     @FXML
-    private Button updateCarBtn;
+    private Button carUpdateBtn;
 
+    Car selectedCar = new Car();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -140,7 +143,29 @@ public class Controller implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        carTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Car>() {
+            @Override
+            public void changed(ObservableValue observableValue, Car o, Car t1) {
+                if (t1 != null) {
+                    Car car = (Car) t1;
+                    mat.setText(car.getMat());
+                    mark.setText(car.getMark());
+                    color.setText(car.getColor());
+                    selectedCar = car;
+                    carDeleteBtn.setDisable(false);
+                    carUpdateBtn.setDisable(false);
+                }
+            }
+        });
+        carDeleteBtn.setDisable(true);
+        carUpdateBtn.setDisable(true);
+        try {
+            this.displayCars();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
+
     private void clearClientForm() {
         this.firstname.clear();
         this.lastname.clear();
@@ -162,7 +187,6 @@ public class Controller implements Initializable {
         }
 
     }
-
 
 
     void displayClient() throws SQLException {
@@ -200,20 +224,61 @@ public class Controller implements Initializable {
         updateClientBtn.setDisable(true);
         this.displayClient();
     }
+
     // car methods
+    void displayCars() throws SQLException {
+        CarServiceImpl carService = new CarServiceImpl();
+        List<Car> carList = carService.getAll();
+        ObservableList<Car> observableArrayList =
+                FXCollections.observableArrayList(carList);
+        idColCar.setCellValueFactory(new PropertyValueFactory<Car, Long>("id"));
+        matColCar.setCellValueFactory(new PropertyValueFactory<Car, String>("mat"));
+        markColCar.setCellValueFactory(new PropertyValueFactory<Car, String>("mark"));
+        colorColCar.setCellValueFactory(new PropertyValueFactory<Car, String>("color"));
+        carTable.setItems(observableArrayList);
+    }
 
     @FXML
-    void createCar(ActionEvent event) {
+    void createCar(ActionEvent event) throws SQLException {
+
+        Car car = new Car(mat.getText(), mark.getText(),
+                color.getText());
+        CarServiceImpl carService = new CarServiceImpl();
+        carService.addCar(car);
+        this.clearClientForm();
+        try {
+            this.displayCars();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 
     @FXML
-    void deleteCar(ActionEvent event) {
+    void deleteCar(ActionEvent event) throws SQLException {
+        CarServiceImpl carService= new CarServiceImpl();
+        carService.deleteCar(selectedCar.getId());
+        this.displayCars();
+        this.carDeleteBtn.setDisable(true);
+        this.carUpdateBtn.setDisable(true);
+    }
 
+    private void clearCarForm() {
+        mat.clear();
+        mark.clear();
+        color.clear();
     }
 
     @FXML
-    void updateCar(ActionEvent event) {
+    void updateCar(ActionEvent event) throws SQLException {
+        CarServiceImpl carService = new CarServiceImpl();
+        Car car = new Car(mat.getText(), mark.getText(), color.getText());
+        car.setId(selectedCar.getId());
+        carService.updateCar(car);
+        this.clearCarForm();
+        this.carUpdateBtn.setDisable(true);
+        this.carDeleteBtn.setDisable(true);
+        this.displayCars();
 
     }
 }

@@ -14,6 +14,12 @@ public class Car {
     public Car() {
     }
 
+    public Car(String mat, String mark, String color) {
+        this.mat = mat;
+        this.mark = mark;
+        this.color = color;
+    }
+
     public Car(long id, String mat, String mark, String color) {
         this.id = id;
         this.mat = mat;

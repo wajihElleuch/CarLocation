@@ -106,6 +106,34 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<Car> getAvailable(String dateDeb,String dateFin) throws SQLException {
+        Connection c= DbConnection.getConnection();
+        List<Car> carList= new ArrayList<>();
+        try {
+            Statement stmt = c.createStatement();
+            String sql= String.format("select * from car where id not in(select car_id from reservation where '%s' between date_debut AND date_fin OR '%s' between date_debut And date_fin OR '%s'< date_debut And '%s' >date_fin)",
+                    dateDeb,dateFin,dateDeb,dateFin);
+            ResultSet result = stmt.executeQuery(sql);
+            while (result.next()){
+                Car car=new Car(result.getLong(1),
+                        result.getString(2),
+                        result.getString(3),
+                        result.getString(4));
+
+                carList.add(car);
+            }
+            stmt.close();
+            c.close();
+
+
+        } catch (Exception e) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+        return carList;
+    }
+
+    @Override
     public Car getById(long id) throws SQLException {
         return null;
     }

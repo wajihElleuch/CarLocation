@@ -10,6 +10,7 @@ public interface CarService {
     Car addCar(Car car) throws SQLException;
     boolean updateCar(Car car) throws SQLException;
     List<Car> getAll() throws SQLException;
+    List<Car> getAvailable(String dateDeb, String dateFin) throws SQLException;
     Car getById(long id) throws SQLException;
     boolean deleteCar(long id) throws SQLException;
 }

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -112,5 +116,47 @@
                </children></AnchorPane>
       </content>
     </Tab>
+      <Tab fx:id="reservationTab" text="Reservation">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <VBox layoutX="30.0" layoutY="34.0" prefHeight="146.0" prefWidth="100.0" spacing="17.0">
+                     <children>
+                        <Label text="date_debut" />
+                        <Label text="date_fin" />
+                        <Label text="client" />
+                        <Label text="car" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="124.0" layoutY="34.0" prefHeight="162.0" prefWidth="149.0" spacing="7.0">
+                     <children>
+                        <DatePicker fx:id="dateDeb" onAction="#onChangeDateDeb" />
+                        <DatePicker fx:id="dateFin" onAction="#onChangeDateFin" />
+                         <ChoiceBox fx:id="clientList" onInputMethodTextChanged="#onSelectClient" prefWidth="150.0">
+                             <items>
+                                 <FXCollections fx:factory="observableArrayList">
+                                     <String fx:value="2 minutes" />
+                                     <String fx:value="5 minutes" />
+                                     <String fx:value="15 minutes" />
+                                 </FXCollections>
+                             </items>
+                         </ChoiceBox>
+                        <ChoiceBox fx:id="carList" prefWidth="150.0" />
+                     </children>
+                  </VBox>
+                  <TableView fx:id="reservationTable" layoutX="356.0" layoutY="25.0" onInputMethodTextChanged="#onSelectClient" prefHeight="200.0" prefWidth="399.0">
+                    <columns>
+                      <TableColumn fx:id="reservationColId" prefWidth="75.0" text="Id" />
+                      <TableColumn fx:id="reservationColDateDeb" prefWidth="75.0" text="date_debut" />
+                        <TableColumn fx:id="reservationColDateFin" prefWidth="75.0" text="date_fin" />
+                        <TableColumn fx:id="reservationColClient" prefWidth="75.0" text="client" />
+                        <TableColumn fx:id="reservationColCar" prefWidth="75.0" text="car" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="reservationCreateBtn" layoutX="30.0" layoutY="196.0" mnemonicParsing="false" onAction="#onCreateReservation" text="Create" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
   </tabs>
 </TabPane>
